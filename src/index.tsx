@@ -8,11 +8,11 @@ import './index.css';
 import App from './App.tsx';
 import { setCountriesMini, setCurrencies, setUSDRates } from './slices/currencies.ts';
 import CurrencyContext from './components/contexts/index';
+import { Currency, Data } from './types.ts';
 
 const runApp = async () => {
   const { dispatch } = store;
   const countries = createContriesArray();
-  // const countriesMini: any = {}; /* !!!!!!!  */
   const countriesMini: { [key: string]: string }  = {};
   countries.forEach((country) => {countriesMini[country.i2] = country.c});
   dispatch(setCountriesMini(countriesMini));
@@ -20,7 +20,7 @@ const runApp = async () => {
   greatBritain.i3 = 'GBP -';
   const currencies = [...countries];
 
-  const addI3 = (data: any) => { /* !!!!!!!  */
+  const addI3 = (data: Data) => {
     const currencyValues = Object.values(data);
     currencies.forEach((currency) => {
       currencyValues.forEach((value: any) => { /* !!!!!!!  */
@@ -35,9 +35,9 @@ const runApp = async () => {
     return currencies;
   }
 
-  const resultCur: any[] = []; /* !!!!!!!  */
-  const i3s: any[] = []; /* !!!!!!!  */
-  const callback = (currency: any) => {  /* !!!!!!!  */
+  const resultCur: Currency[] = [];
+  const i3s: string[] = [];
+  const callback = (currency: Currency) => {
     const { i3 } = currency;
     if (!i3s.includes(i3)) {
       i3s.push(currency.i3);
