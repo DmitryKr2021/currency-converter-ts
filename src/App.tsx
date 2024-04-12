@@ -1,26 +1,31 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import {
+  createBrowserRouter,
+  createRoutesFromElements,
+  Route,
+  RouterProvider,
+} from 'react-router-dom';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import 'bootstrap';
+import ErrorPage from './components/ErrorPage.tsx';
+import MainPage from './components/MainPage.tsx';
+import * as routes from './routes.ts';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+const router = createBrowserRouter(
+  createRoutesFromElements(
+    <Route path={routes.root()} element={null}>
+      <Route index element={<MainPage />} />
+      <Route path="*" element={<ErrorPage />} />
+    </Route>,
+  ),
+);
+
+const App: React.FC = () => (
+  <div className="h-100">
+    <div className="h-100 d-flex flex-column">
+      <RouterProvider router={router} />
     </div>
-  );
-}
+  </div>
+);
 
 export default App;
